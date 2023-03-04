@@ -8,19 +8,19 @@ declare module '*.module.css' {
   export default classes;
 }
 
-declare type PanelState = {
+export declare type PanelState = {
   size?: number;
   minSize?: number;
   resize?: 'fixed' | 'dynamic' | 'stretch';
   windows: WindowState[];
 };
 
-declare type WindowState = {
+export declare type WindowState = {
   selected: number | 0;
   widgets: string[];
 };
 
-declare type DockableProps = {
+export declare type DockableProps = {
   initialState: PanelState[];
   hidden?: {
     [key: string]: boolean;
