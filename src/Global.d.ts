@@ -21,7 +21,7 @@ declare module 'types' {
     widgets: string[];
   }
 
-  export interface DockableProps {
+  declare type DockableProps = {
     initialState: PanelState[];
     hidden?: {
       [key: string]: boolean;
@@ -36,5 +36,7 @@ declare module 'types' {
     active?: string;
     tabHeight?: number;
     children?: JSX.Element | JSX.Element[];
-  }
+    top?: number;
+    left?: number;
+  };
 }
