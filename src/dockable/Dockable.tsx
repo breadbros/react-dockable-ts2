@@ -54,6 +54,10 @@ type DockableProps = {
   active?: string;
   tabHeight?: number;
   children?: JSX.Element | JSX.Element[];
+  top?: number;
+  left?: number;
+  actions?: any;
+  onClickOut?: (event: {}) => void;
 };
 
 function Dockable({
