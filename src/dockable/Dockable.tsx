@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
-import { arrayMoveImmutable as arrayMove } from 'array-move';
+import { arrayMoveImmutable } from 'array-move';
 import PanelGroup from '../react-panelgroup';
 import ContextMenu from './ContextMenu';
 import WindowPanel from './WindowPanel';
@@ -173,7 +173,7 @@ function Dockable({
     tabEnd: number
   ) {
     let newPanels = [...getPanels()];
-    newPanels[panelIndex].windows[windowIndex].widgets = arrayMove(
+    newPanels[panelIndex].windows[windowIndex].widgets = arrayMoveImmutable(
       newPanels[panelIndex].windows[windowIndex].widgets,
       tabStart,
       tabEnd
