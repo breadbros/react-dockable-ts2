@@ -38,5 +38,7 @@ declare module 'types' {
     children?: JSX.Element | JSX.Element[];
     top?: number;
     left?: number;
+    actions?: any;
+    onClickOut?: (event: {}) => void;
   };
 }
