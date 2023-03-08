@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
-import { arrayMoveImmutable } from 'array-move';
 import PanelGroup from '../react-panelgroup';
 import ContextMenu from './ContextMenu';
 import WindowPanel from './WindowPanel';
@@ -9,6 +8,23 @@ import css from './css/Dockable.module.css';
 
 // types
 import { Actions } from './ContextMenu';
+
+function arrayMoveMutable(array: any[], fromIndex: number, toIndex: number) {
+  const startIndex = fromIndex < 0 ? array.length + fromIndex : fromIndex;
+
+  if (startIndex >= 0 && startIndex < array.length) {
+    const endIndex = toIndex < 0 ? array.length + toIndex : toIndex;
+
+    const [item] = array.splice(fromIndex, 1);
+    array.splice(endIndex, 0, item);
+  }
+}
+
+function arrayMoveImmutable(array: any[], fromIndex: number, toIndex: number) {
+  array = [...array];
+  arrayMoveMutable(array, fromIndex, toIndex);
+  return array;
+}
 
 // TODO declarative API
 // <Dockable>
