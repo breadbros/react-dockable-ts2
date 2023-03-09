@@ -102,6 +102,13 @@ function WindowPanel({
   function getFilteredWindows() {
     if (!hidden) return windows;
 
+    if (!windows) {
+      var self = this;
+      throw new ErrorWithContext('Expected "this.windows" to exist.', {
+        this: self,
+      });
+    }
+
     if (!windows.filter) {
       throw new ErrorWithContext('Expected "windows" to be an array.  ', {
         windows,
