@@ -1,9 +1,9 @@
-import React, { useRef } from "react";
-import PanelGroup from "../react-panelgroup";
-import Window from "./Window";
-import { Widget } from "./Widget";
+import React, { useRef } from 'react';
+import PanelGroup from '../react-panelgroup';
+import Window from './Window';
+import { Widget } from './Widget';
 
-import css from "./css/WindowPanel.module.css";
+import css from './css/WindowPanel.module.css';
 
 function WindowPanel({
   index,
@@ -82,17 +82,24 @@ function WindowPanel({
   }
 
   function filterVisibleWidgets(thisWindow) {
-    return thisWindow.widgets.filter(
-      (widget) => !(getWidgetComponent(widget).props.hidden || hidden[widget])
-    );
+    try {
+      return thisWindow.widgets.filter(
+        widget => !(getWidgetComponent(widget).props.hidden || hidden[widget])
+      );
+    } catch (e) {
+      console.error(
+        'Almost certainly missing/misentered a dockable id. Error: ',
+        e
+      );
+    }
   }
 
   function getFilteredWindows() {
     if (!hidden) return windows;
 
-    return windows.filter((windows) => {
+    return windows.filter(windows => {
       return (
-        windows.widgets.filter((widget) => {
+        windows.widgets.filter(widget => {
           return !hidden[widget];
         }).length > 0
       );
@@ -100,17 +107,15 @@ function WindowPanel({
   }
 
   function getWidgetComponent(id) {
-    return React.Children.toArray(widgets).find(
-      (child) => child.props.id === id
-    );
+    return React.Children.toArray(widgets).find(child => child.props.id === id);
   }
 
   return (
     <div className={css.container} ref={containerRef}>
       <PanelGroup
-        direction={"column"}
+        direction={'column'}
         spacing={spacing || 0}
-        borderColor={"transparent"}
+        borderColor={'transparent'}
         panelWidths={getFilteredWindows()}
         // onUpdate={panels => setState({ panelWidths: panels.slice() })}
         onUpdate={handleResize}
@@ -128,7 +133,7 @@ function WindowPanel({
               isLast={windowIndex === windows.length - 1}
               draggingTab={draggingTab}
               hoverBorder={hoverBorder}
-              onHoverBorder={(i) => {
+              onHoverBorder={i => {
                 onHoverBorder(i === null ? null : [index, i]);
               }}
               onSort={onTabSort.bind(this, index, windowIndex)}
@@ -144,15 +149,15 @@ function WindowPanel({
               // }}
               onTabSwitch={handleTabSwitch.bind(null, windowIndex)}
               onTabClosed={(winId, tabId) => {
-                var [panelId, windowId] = winId.split(",");
+                var [panelId, windowId] = winId.split(',');
                 onTabClosed(
                   parseInt(panelId, 10),
                   parseInt(windowId, 10),
                   tabId
                 );
               }}
-              onWindowClosed={(winId) => {
-                var [panelId, windowId] = winId.split(",");
+              onWindowClosed={winId => {
+                var [panelId, windowId] = winId.split(',');
                 onWindowClosed(parseInt(panelId, 10), parseInt(windowId, 10));
               }}
               hideTabs={thisWindow.hideTabs || hideTabs}
