@@ -3,6 +3,8 @@ import PanelGroup from '../react-panelgroup';
 import Window from './Window';
 import { Widget } from './Widget';
 
+import { ErrorWithContext } from './ErrorWithContext';
+
 import css from './css/WindowPanel.module.css';
 
 function WindowPanel({
@@ -99,6 +101,12 @@ function WindowPanel({
 
   function getFilteredWindows() {
     if (!hidden) return windows;
+
+    if (!windows.filter) {
+      throw new ErrorWithContext('Expected "windows" to be an array.  ', {
+        windows,
+      });
+    }
 
     return windows.filter(windows => {
       return (
