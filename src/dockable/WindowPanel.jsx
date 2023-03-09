@@ -103,7 +103,18 @@ function WindowPanel({
     return windows.filter(windows => {
       return (
         windows.widgets.filter(widget => {
-          return !hidden[widget];
+          let val = false;
+          try {
+            val = hidden[widget];
+          } catch (e) {
+            console.error(`Error accessing hidden[${widget}]`, e);
+            console.error(
+              'suppressing for now. Dan, this should probably throw correctly and do an error boundary thing? -Ben'
+            );
+            //TODO: fix this bug for a better handholding experience.  Debugging bad data in-system is a pain rigth now -Ben
+          }
+
+          return !val;
         }).length > 0
       );
     });
