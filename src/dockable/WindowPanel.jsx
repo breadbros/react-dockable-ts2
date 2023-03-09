@@ -82,13 +82,16 @@ function WindowPanel({
   }
 
   function filterVisibleWidgets(thisWindow) {
+    let lastKey = 'unknown';
     try {
-      return thisWindow.widgets.filter(
-        widget => !(getWidgetComponent(widget).props.hidden || hidden[widget])
-      );
+      return thisWindow.widgets.filter(widget => {
+        lastKey = widget;
+        return !(getWidgetComponent(widget).props.hidden || hidden[widget]);
+      });
     } catch (e) {
       console.error(
-        'Almost certainly missing/misentered a dockable id. Error: ',
+        `Almost certainly missing/misentered a dockable id. lastKey: ${lastKey} Error: `,
+        lastKey,
         e
       );
     }
