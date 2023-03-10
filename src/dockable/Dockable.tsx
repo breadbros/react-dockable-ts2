@@ -74,6 +74,8 @@ type DockableProps = {
   left?: number;
   actions?: any;
   onClickOut?: (event: {}) => void;
+
+  testId?: string; /// if present will put a data-testid on a dockable container for your React Testing Library needs.
 };
 
 function Dockable({
@@ -89,6 +91,7 @@ function Dockable({
   active,
   tabHeight,
   children,
+  testId,
 }: DockableProps) {
   const [state, setState] = useState({
     contextMenu: null as ContextMenu,
@@ -338,12 +341,15 @@ function Dockable({
     return panels;
   }
 
+  const testIdAttribute = testId ? { 'data-testid': testId } : {};
+
   return (
     <div
       className={`Dockable_root ${css.container} ${
         themeClass ? themeClass : css.theme
       }`}
       style={theme}
+      {...testIdAttribute}
     >
       <DragDropContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
         <PanelGroup
